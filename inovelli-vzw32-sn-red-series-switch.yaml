@@ -11,6 +11,10 @@ blueprint:
         device:
           integration: zwave_js
 
+    # =============================
+    # UP BUTTON ACTIONS
+    # =============================
+
     button_1x_up:
       name: Up - Single Tap
       default: []
@@ -28,6 +32,10 @@ blueprint:
       default: []
       selector:
         action: {}
+
+    # =============================
+    # DOWN BUTTON ACTIONS
+    # =============================
 
     button_1x_down:
       name: Down - Single Tap
@@ -83,7 +91,6 @@ action:
             value_template: >
               {{ button_id == "001" and press_count == 4 }}
         sequence: !input button_3x_up
-
 
       # =============================
       # DOWN BUTTON (002)
