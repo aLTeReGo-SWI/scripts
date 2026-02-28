@@ -1,7 +1,8 @@
 blueprint:
-  name: Inovelli VZW32-SN Red Series Switch (Z-Wave JS Updated)
+  name: Inovelli VZW32-SN Red Series Switch (Z-Wave JS Updated - Corrected Mapping)
   description: >
-    Updated for modern Z-Wave JS versions that use numeric Central Scene values.
+    Updated for modern Z-Wave JS versions using numeric Central Scene values.
+    Paddle mapping corrected based on actual device events.
   domain: automation
 
   input:
@@ -12,7 +13,7 @@ blueprint:
           integration: zwave_js
 
     # =============================
-    # UP BUTTON ACTIONS
+    # UP BUTTON ACTIONS (property_key_name "002")
     # =============================
 
     button_1x_up:
@@ -34,7 +35,7 @@ blueprint:
         action: {}
 
     # =============================
-    # DOWN BUTTON ACTIONS
+    # DOWN BUTTON ACTIONS (property_key_name "001")
     # =============================
 
     button_1x_down:
@@ -71,45 +72,46 @@ action:
   - choose:
 
       # =============================
-      # UP BUTTON (001)
-      # =============================
-
-      - conditions:
-          - condition: template
-            value_template: >
-              {{ button_id == "001" and press_count == 0 }}
-        sequence: !input button_1x_up
-
-      - conditions:
-          - condition: template
-            value_template: >
-              {{ button_id == "001" and press_count == 3 }}
-        sequence: !input button_2x_up
-
-      - conditions:
-          - condition: template
-            value_template: >
-              {{ button_id == "001" and press_count == 4 }}
-        sequence: !input button_3x_up
-
-      # =============================
-      # DOWN BUTTON (002)
+      # UP BUTTON (002)
       # =============================
 
       - conditions:
           - condition: template
             value_template: >
               {{ button_id == "002" and press_count == 0 }}
-        sequence: !input button_1x_down
+        sequence: !input button_1x_up
 
       - conditions:
           - condition: template
             value_template: >
               {{ button_id == "002" and press_count == 3 }}
-        sequence: !input button_2x_down
+        sequence: !input button_2x_up
 
       - conditions:
           - condition: template
             value_template: >
               {{ button_id == "002" and press_count == 4 }}
+        sequence: !input button_3x_up
+
+
+      # =============================
+      # DOWN BUTTON (001)
+      # =============================
+
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ button_id == "001" and press_count == 0 }}
+        sequence: !input button_1x_down
+
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ button_id == "001" and press_count == 3 }}
+        sequence: !input button_2x_down
+
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ button_id == "001" and press_count == 4 }}
         sequence: !input button_3x_down
